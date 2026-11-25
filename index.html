@@ -1,0 +1,2239 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DayByDay - 30 Days Challenge Tracker</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            surface: {
+              DEFAULT: '#0b1326',
+              dim: '#0b1326',
+              bright: '#31394d',
+              lowest: '#060e20',
+              low: '#131b2e',
+              container: '#171f33',
+              high: '#222a3d',
+              highest: '#2d3449',
+              variant: '#2d3449',
+            },
+            'on-surface': '#dae2fd',
+            'on-surface-variant': '#c7c4d7',
+            'inverse-surface': '#dae2fd',
+            'inverse-on-surface': '#283044',
+            outline: {
+              DEFAULT: '#908fa0',
+              variant: '#464554',
+            },
+            'surface-tint': '#c0c1ff',
+            primary: {
+              DEFAULT: '#c0c1ff',
+              hover: '#4F46E5',
+              tint: '#c0c1ff',
+              container: '#8083ff',
+            },
+            'on-primary': '#1000a9',
+            'primary-container': '#8083ff',
+            'on-primary-container': '#0d0096',
+            'inverse-primary': '#494bd6',
+            secondary: {
+              DEFAULT: '#d0bcff',
+              tint: '#d0bcff',
+              container: '#571bc1'
+            },
+            'on-secondary': '#3c0091',
+            'secondary-container': '#571bc1',
+            'on-secondary-container': '#c4abff',
+            tertiary: {
+              DEFAULT: '#4edea3',
+              hover: '#059669',
+              tint: '#4edea3',
+              container: '#00885d'
+            },
+            'on-tertiary': '#003824',
+            'tertiary-container': '#00885d',
+            'on-tertiary-container': '#000703',
+            error: '#ffb4ab',
+            'on-error': '#690005',
+            'error-container': '#93000a',
+            'on-error-container': '#ffdad6',
+            'primary-fixed': '#e1e0ff',
+            'primary-fixed-dim': '#c0c1ff',
+            'on-primary-fixed': '#07006c',
+            'on-primary-fixed-variant': '#2f2ebe',
+            'secondary-fixed': '#e9ddff',
+            'secondary-fixed-dim': '#d0bcff',
+            'on-secondary-fixed': '#23005c',
+            'on-secondary-fixed-variant': '#5516be',
+            'tertiary-fixed': '#6ffbbe',
+            'tertiary-fixed-dim': '#4edea3',
+            'on-tertiary-fixed': '#002113',
+            'on-tertiary-fixed-variant': '#005236',
+            background: '#0b1326',
+            'on-background': '#dae2fd',
+            'surface-variant': '#2d3449',
+            brand: {
+              indigo: '#6366F1',
+              'indigo-dark': '#4F46E5',
+              purple: '#8B5CF6',
+              emerald: '#10B981',
+              'emerald-dark': '#059669',
+              amber: '#F59E0B'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          fontSize: {
+            'display-hero': ['48px', { lineHeight: '56px', letterSpacing: '-0.025em', fontWeight: '800' }],
+            'display-hero-mobile': ['36px', { lineHeight: '44px', letterSpacing: '-0.02em', fontWeight: '800' }],
+            'headline-lg': ['32px', { lineHeight: '40px', letterSpacing: '-0.02em', fontWeight: '700' }],
+            'headline-lg-mobile': ['26px', { lineHeight: '34px', letterSpacing: '-0.015em', fontWeight: '700' }],
+            'headline-md': ['24px', { lineHeight: '32px', letterSpacing: '-0.015em', fontWeight: '600' }],
+            'headline-sm': ['20px', { lineHeight: '28px', letterSpacing: '-0.01em', fontWeight: '600' }],
+            'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+            'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+            'body-sm': ['12px', { lineHeight: '16px', fontWeight: '400' }],
+            'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0.01em', fontWeight: '600' }],
+            'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.02em', fontWeight: '600' }],
+            'label-sm': ['10px', { lineHeight: '14px', letterSpacing: '0.05em', fontWeight: '700' }],
+            'metric-tabular': ['28px', { lineHeight: '32px', letterSpacing: '-0.02em', fontWeight: '700' }],
+            'quote-styled': ['15px', { lineHeight: '24px', letterSpacing: '-0.01em', fontWeight: '500' }],
+          },
+          boxShadow: {
+            'glow-primary': '0 0 20px rgba(99, 102, 241, 0.35)',
+            'glow-emerald': '0 0 16px rgba(16, 185, 129, 0.35)',
+            'glow-flame': '0 0 22px rgba(245, 158, 11, 0.4)',
+            'glass-elevated': '0 12px 32px -4px rgba(0, 0, 0, 0.35)',
+            'modal-rim': '0 24px 48px -12px rgba(99, 102, 241, 0.18)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- React 18 & ReactDOM via CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel for inline JSX compilation -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* Tabular Numerics for jitter-free numbers */
+    .tabular-nums {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-feature-settings: "tnum" 1, "cv05" 1;
+    }
+
+    /* Glassmorphism Classes */
+    .glass-card {
+      background: rgba(23, 31, 51, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    html:not(.dark) .glass-card {
+      background: rgba(255, 255, 255, 0.9) !important;
+      border-color: rgba(15, 23, 42, 0.08) !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .glass-elevated {
+      background: rgba(30, 41, 59, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Active Pulse */
+    @keyframes activePulse {
+      0%, 100% {
+        box-shadow: 0 0 14px rgba(99, 102, 241, 0.35);
+        border-color: #6366F1;
+      }
+      50% {
+        box-shadow: 0 0 28px rgba(99, 102, 241, 0.7);
+        border-color: #a5b4fc;
+      }
+    }
+    .animate-active-pulse {
+      animation: activePulse 2.2s infinite ease-in-out;
+    }
+
+    /* Custom Scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+    }
+
+    body {
+      background-color: #0b1326 !important;
+      color: #dae2fd !important;
+    }
+
+    html:not(.dark) body {
+      background-color: #F8FAFC !important;
+      color: #0F172A !important;
+    }
+  </style>
+</head>
+<body class="bg-[#0b1326] text-on-surface min-h-screen font-sans antialiased selection:bg-brand-indigo selection:text-white transition-colors duration-300">
+  <div id="root"></div>
+
+  <!-- React Application Script -->
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // Web Audio Chime Generator
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+      init() {
+        if (!this.ctx && window.AudioContext) {
+          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      }
+      playCheckin() {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') this.ctx.resume();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.12);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.35);
+        } catch(e) {}
+      }
+      playMilestone() {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') this.ctx.resume();
+          const now = this.ctx.currentTime;
+          [440, 554.37, 659.25, 880].forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+            gain.gain.setValueAtTime(0.16, now + idx * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.4);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.08);
+            osc.stop(now + idx * 0.08 + 0.4);
+          });
+        } catch(e) {}
+      }
+    }
+    const sound = new SoundEngine();
+
+    // Motivational quotes
+    const motivationalQuotes = [
+      { text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", author: "Will Durant" },
+      { text: "You do not rise to the level of your goals. You fall to the level of your systems.", author: "James Clear" },
+      { text: "Small daily improvements over time lead to stunning results.", author: "Robin Sharma" },
+      { text: "At first we make our habits, then our habits make us.", author: "John Dryden" },
+      { text: "The impediment to action advances action. What stands in the way becomes the way.", author: "Marcus Aurelius" }
+    ];
+
+    // Initial Default Challenge Seeds (Matching user screenshot)
+    const initialSeedChallenges = [
+      {
+        _id: 'seed_workout_1',
+        title: '30-Day Workout & Strength Sprint',
+        category: 'Fitness & Health',
+        schedule: 'Daily 7:00 AM',
+        description: 'Non-negotiable daily training, 20 push-ups, 3km evening walk, and clean nutrition tracking.',
+        streak: 12,
+        days: Array.from({ length: 30 }, (_, i) => {
+          const d = i + 1;
+          let status = 'pending';
+          let note = '';
+          let mood = null;
+          if (d <= 11) { status = 'completed'; mood = 5; }
+          else if (d === 12 || d === 13) { status = 'completed'; mood = 4; note = 'Partial recovery session'; }
+          else if (d === 14) { status = 'pending'; note = 'Today: 20 push-ups & 3km walk'; }
+          return { dayNumber: d, status, note, mood };
+        }),
+        habits: [
+          { id: 'h1', text: '45-min Morning Strength Training', completed: true },
+          { id: 'h2', text: 'Drink 3L Water + Electrolytes', completed: true },
+          { id: 'h3', text: '20 Push-ups & 3km Evening Walk', completed: false }
+        ]
+      },
+      {
+        _id: 'seed_deepwork_2',
+        title: '30 Days Morning Deep Work',
+        category: 'Productivity',
+        schedule: 'Daily 9:00 AM',
+        description: 'Zero distractions before 11 AM. 90-min hard problem focus and clean GitHub commits.',
+        streak: 8,
+        days: Array.from({ length: 30 }, (_, i) => ({
+          dayNumber: i + 1,
+          status: i < 8 ? 'completed' : 'pending',
+          note: '',
+          mood: i < 8 ? 5 : null
+        })),
+        habits: [
+          { id: 'dw1', text: 'Focus Block: 90 mins Deep Coding', completed: true },
+          { id: 'dw2', text: 'Push 1 verified GitHub commit', completed: true },
+          { id: 'dw3', text: 'Read 1 Technical RFC / Paper (Pending)', completed: false }
+        ]
+      }
+    ];
+
+    function App() {
+      const [currentUser, setCurrentUser] = useState(() => {
+        const saved = localStorage.getItem('daybyday_auth_user');
+        return saved ? JSON.parse(saved) : null;
+      });
+      const [isProfileOpen, setIsProfileOpen] = useState(false);
+      const [authMode, setAuthMode] = useState('signin'); // 'signin' or 'signup'
+      const [authName, setAuthName] = useState('');
+      const [authEmail, setAuthEmail] = useState('');
+      const [authPassword, setAuthPassword] = useState('');
+      const [showAuthPassword, setShowAuthPassword] = useState(false);
+      const [authError, setAuthError] = useState('');
+      const [authSuccess, setAuthSuccess] = useState('');
+      const [challenges, setChallenges] = useState(() => {
+        const saved = localStorage.getItem('daybyday_standalone_data_v2');
+        return saved ? JSON.parse(saved) : initialSeedChallenges;
+      });
+      const [activeChallengeId, setActiveChallengeId] = useState(() => challenges[0]._id);
+      const [activeTab, setActiveTab] = useState('dashboard'); // default to Dashboard (Home) as in Stitch screen 1db983cbf4a04fed9d28b3c01ac0ef92
+      const [searchQuery, setSearchQuery] = useState('');
+      const [selectedCategory, setSelectedCategory] = useState('All');
+      const [activeFilterTab, setActiveFilterTab] = useState('all');
+
+      // Deep Work Checklist toggle state
+      const [deepWorkTasks, setDeepWorkTasks] = useState([
+        { id: 'dw1', text: 'Focus Block: 90 mins Deep Coding', done: true },
+        { id: 'dw2', text: 'Push 1 verified GitHub commit', done: true },
+        { id: 'dw3', text: 'Read 1 Technical RFC / Paper (Pending)', done: false }
+      ]);
+
+      const toggleDeepWork = (id) => {
+        setDeepWorkTasks(prev => prev.map(t => t.id === id ? { ...t, done: !t.done } : t));
+        sound.playCheckin();
+      };
+      const [isDark, setIsDark] = useState(true);
+      const [quoteIndex, setQuoteIndex] = useState(0);
+
+      // Modals
+      const [dayModal, setDayModal] = useState(null); // active day object
+      const [isNewModalOpen, setIsNewModalOpen] = useState(false);
+      const [celebrationData, setCelebrationData] = useState(null);
+      const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+      const activeChallenge = challenges.find(c => c._id === activeChallengeId) || challenges[0];
+
+      useEffect(() => {
+        localStorage.setItem('daybyday_standalone_data', JSON.stringify(challenges));
+      }, [challenges]);
+
+      // Metrics calculation
+      const completedCount = activeChallenge.days.filter(d => d.status === 'completed').length;
+      const successRate = Math.round((completedCount / 30) * 100);
+      const remainingDays = 30 - completedCount;
+      const firstPending = activeChallenge.days.find(d => d.status === 'pending');
+      const activeDayNumber = firstPending ? firstPending.dayNumber : 30;
+
+      // Toggle Day status
+      const handleToggleDay = (dayNumber) => {
+        const target = activeChallenge.days.find(d => d.dayNumber === dayNumber);
+        if (!target) return;
+        let nextStatus = 'completed';
+        if (target.status === 'pending') nextStatus = 'completed';
+        else if (target.status === 'completed') nextStatus = 'missed';
+        else if (target.status === 'missed') nextStatus = 'pending';
+
+        if (nextStatus === 'completed') sound.playCheckin();
+
+        const updatedDays = activeChallenge.days.map(d => {
+          if (d.dayNumber === dayNumber) return { ...d, status: nextStatus };
+          return d;
+        });
+
+        // Recalculate streak
+        let streak = 0;
+        for (const d of updatedDays) {
+          if (d.status === 'completed') streak++;
+          else if (d.status === 'missed') streak = 0;
+          else break;
+        }
+
+        const updatedChallenge = { ...activeChallenge, days: updatedDays, streak };
+        setChallenges(challenges.map(c => c._id === activeChallenge._id ? updatedChallenge : c));
+
+        // Milestone trigger
+        const newTotal = updatedDays.filter(d => d.status === 'completed').length;
+        if ([7, 14, 21, 30].includes(newTotal) && nextStatus === 'completed') {
+          sound.playMilestone();
+          if (window.confetti) {
+            window.confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+          }
+          setCelebrationData({ milestone: newTotal, streak, rate: Math.round((newTotal / 30) * 100) });
+        }
+      };
+
+      // Save reflection note
+      const handleSaveDayNote = (dayNum, status, note, mood) => {
+        const updatedDays = activeChallenge.days.map(d => {
+          if (d.dayNumber === dayNum) return { ...d, status, note, mood };
+          return d;
+        });
+        const updatedChallenge = { ...activeChallenge, days: updatedDays };
+        setChallenges(challenges.map(c => c._id === activeChallenge._id ? updatedChallenge : c));
+        setDayModal(null);
+      };
+
+      // Toggle habit
+      const handleToggleHabit = (id) => {
+        sound.playCheckin();
+        const updated = activeChallenge.habits.map(h => h.id === id ? { ...h, completed: !h.completed } : h);
+        const updatedChallenge = { ...activeChallenge, habits: updated };
+        setChallenges(challenges.map(c => c._id === activeChallenge._id ? updatedChallenge : c));
+      };
+
+      // Add habit
+      const handleAddHabit = (text) => {
+        if (!text.trim()) return;
+        const newH = { id: 'h_' + Date.now(), text: text.trim(), completed: false };
+        const updatedChallenge = { ...activeChallenge, habits: [...activeChallenge.habits, newH] };
+        setChallenges(challenges.map(c => c._id === activeChallenge._id ? updatedChallenge : c));
+      };
+
+      // Create challenge
+      const handleCreateChallenge = (title, category, description, habits) => {
+        const newC = {
+          _id: 'c_' + Date.now(),
+          title,
+          category,
+          description,
+          streak: 0,
+          days: Array.from({ length: 30 }, (_, i) => ({
+            dayNumber: i + 1,
+            status: 'pending',
+            note: '',
+            mood: null
+          })),
+          habits: habits.length > 0
+            ? habits.map((text, idx) => ({ id: 'h_' + idx, text, completed: false }))
+            : [{ id: 'h1', text: '45-min daily focus sprint', completed: false }]
+        };
+        setChallenges([newC, ...challenges]);
+        setActiveChallengeId(newC._id);
+        setIsNewModalOpen(false);
+        sound.playMilestone();
+      };
+
+      const navItems = [
+        { id: 'dashboard', label: 'Dashboard (Home)', icon: '📊' },
+        { id: 'today', label: "Today's Tasks", icon: '✓' },
+        { id: 'calendar', label: '30-Day Calendar', icon: '📅' },
+        { id: 'analytics', label: 'Progress & Analytics', icon: '📈' },
+        { id: 'challenges', label: 'My Challenges', icon: '🎯' },
+        { id: 'completion', label: 'Challenge Completion', icon: '🏆' },
+        { id: 'settings', label: 'Settings', icon: '⚙️' }
+      ];
+
+      const handleEnroll = (title) => {
+        handleCreateChallenge(title, 'Curated Template', '30-Day transformation blueprint.', ['Daily execution', 'Hydration', 'Evening review']);
+        setActiveTab('challenges');
+        alert(`Enrolled into "${title}"! View it under active sprints.`);
+      };
+
+      const circumference = 314.159;
+      const strokeDashoffset = circumference - (successRate / 100) * circumference;
+
+      // If user is not logged in, show Stitch Auth / Login view with strict DB check
+      if (!currentUser) {
+        const handleAuthSubmit = (e) => {
+          e.preventDefault();
+          setAuthError('');
+          setAuthSuccess('');
+
+          const cleanEmail = authEmail.trim().toLowerCase();
+          const cleanPwd = authPassword.trim();
+
+          if (!cleanEmail || !cleanPwd) {
+            setAuthError('Please enter both email and password.');
+            return;
+          }
+
+          // Pre-seeded default users list
+          const defaultUsers = [
+            { name: 'Karthik V.', email: 'alex@example.com', password: 'password123', streak: 12 }
+          ];
+
+          const stored = localStorage.getItem('daybyday_registered_users');
+          const registeredUsers = stored ? JSON.parse(stored) : defaultUsers;
+          if (!stored) {
+            localStorage.setItem('daybyday_registered_users', JSON.stringify(defaultUsers));
+          }
+
+          if (authMode === 'signup') {
+            if (!authName.trim()) {
+              setAuthError('Please enter your full name to create an account.');
+              return;
+            }
+            const exists = registeredUsers.find(u => u.email.toLowerCase() === cleanEmail);
+            if (exists) {
+              setAuthError('An account with this email already exists in the database. Please sign in.');
+              return;
+            }
+            const newUser = {
+              name: authName.trim(),
+              email: cleanEmail,
+              password: cleanPwd,
+              streak: 12
+            };
+            registeredUsers.push(newUser);
+            localStorage.setItem('daybyday_registered_users', JSON.stringify(registeredUsers));
+            localStorage.setItem('daybyday_auth_user', JSON.stringify(newUser));
+            sound.playMilestone();
+            setAuthSuccess('Account created successfully! Welcome to DayByDay.');
+            setTimeout(() => {
+              setCurrentUser(newUser);
+            }, 300);
+          } else {
+            // Strict Login check
+            const user = registeredUsers.find(u => u.email.toLowerCase() === cleanEmail);
+            if (!user) {
+              setAuthError('Account not found in database! Please create an account first by clicking "Sign up for free".');
+              return;
+            }
+            if (user.password !== cleanPwd) {
+              setAuthError('Incorrect password. Please enter the correct password.');
+              return;
+            }
+            localStorage.setItem('daybyday_auth_user', JSON.stringify(user));
+            sound.playMilestone();
+            setCurrentUser(user);
+          }
+        };
+
+        return (
+          <div className="min-h-screen bg-[#0b1326] text-[#dae2fd] flex flex-col justify-between items-center p-4 sm:p-6 lg:p-8 relative overflow-hidden font-sans select-none">
+            {/* Background ambient light */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#6366F1]/15 to-transparent blur-3xl pointer-events-none"></div>
+            <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-[#4edea3]/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            {/* Top Brand & Notification Pill */}
+            <div className="w-full max-w-4xl flex flex-col items-center pt-2 sm:pt-4 z-10 space-y-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#6366F1] to-[#8083ff] p-[1.5px] shadow-[0_0_16px_rgba(99,102,241,0.5)]">
+                  <div className="w-full h-full bg-[#0b1326] rounded-xl flex items-center justify-center">
+                    <span className="text-[#c0c1ff] text-sm font-bold">⚡</span>
+                  </div>
+                </div>
+                <span className="font-display font-extrabold text-base tracking-tight text-white">
+                  DayByDay Tracker
+                </span>
+              </div>
+
+              {/* Notification Pill */}
+              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#131b2e] border border-white/10 text-xs font-display shadow-lg shadow-black/40">
+                <span className="w-2 h-2 rounded-full bg-[#4edea3] animate-pulse"></span>
+                <span className="text-amber-400">🔥</span>
+                <span className="text-white font-medium">12-day streak waiting for you</span>
+                <span className="text-white/20">|</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#908fa0]">
+                  DAY 13/30 UNLOCKS TODAY
+                </span>
+              </div>
+            </div>
+
+            {/* Split Card */}
+            <div className="w-full max-w-4xl my-6 rounded-3xl bg-[#0f172a]/90 backdrop-blur-xl border border-white/10 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.7)] grid grid-cols-1 md:grid-cols-2 overflow-hidden z-10">
+              
+              {/* Left Panel */}
+              <div className="bg-[#131b2e]/60 border-b md:border-b-0 md:border-r border-white/5 p-7 sm:p-8 flex flex-col justify-between space-y-6">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-1 rounded bg-[#171f33] border border-white/5 text-[10px] font-display font-bold uppercase tracking-wider text-[#c0c1ff]">
+                      MICRO-SPRINT PHASE 2
+                    </span>
+                    <span className="text-[10px] font-display font-semibold text-[#908fa0]">
+                      {new Date().getFullYear()} Cycle
+                    </span>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h2 className="font-display font-black text-2xl text-white tracking-tight leading-snug">
+                      Build a 30-day habit that sticks.
+                    </h2>
+                    <p className="font-sans text-xs text-[#908fa0] leading-relaxed">
+                      Small daily commitments compound into permanent lifestyle transformations. Keep your momentum alive.
+                    </p>
+                  </div>
+
+                  {/* 6x5 Grid Preview */}
+                  <div className="rounded-2xl bg-[#0b1326] border border-white/5 p-4 space-y-3.5 shadow-inner">
+                    <div className="flex items-center justify-between text-xs font-display">
+                      <span className="flex items-center gap-1.5 text-[#4edea3] font-bold">
+                        <span>✓</span> Deep Focus 90m
+                      </span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#00885d]/30 text-[#4edea3] border border-[#4edea3]/30">
+                        80% Velocity
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-6 gap-2">
+                      {Array.from({ length: 30 }, (_, i) => {
+                        const day = i + 1;
+                        const isDone = day <= 12;
+                        const isToday = day === 13;
+                        let style = isDone 
+                          ? 'bg-[#00885d]/30 border border-[#4edea3]/40 text-[#4edea3]' 
+                          : (isToday ? 'bg-[#c0c1ff] text-[#07006c] font-black border-2 border-white shadow-[0_0_12px_rgba(192,193,255,0.7)] animate-pulse' : 'bg-[#131b2e] border border-white/5 text-[#908fa0]/40');
+                        return (
+                          <div key={day} className={`h-9 rounded-lg flex items-center justify-center text-xs font-display ${style}`}>
+                            {isDone ? '✓' : day}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] font-display text-[#908fa0] pt-1 border-t border-white/5">
+                      <span>Sprint: Morning Routine</span>
+                      <span className="flex items-center gap-1 text-[#4edea3] font-bold">
+                        <span>⚡</span> 42d total record
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Panel: Form */}
+              <div className="p-7 sm:p-8 flex flex-col justify-between space-y-5 bg-[#0f172a]">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display font-bold uppercase tracking-wider bg-[#571bc1]/25 text-[#c0c1ff] border border-[#8083ff]/30">
+                      <span>🔒</span> Secure Member Portal
+                    </span>
+                    <h2 className="font-display font-black text-2xl text-white tracking-tight">
+                      {authMode === 'signup' ? 'Create your DayByDay account' : 'Welcome back to DayByDay'}
+                    </h2>
+                    <p className="font-sans text-xs text-[#908fa0]">
+                      {authMode === 'signup' 
+                        ? 'Sign up to register your credentials in the database and begin your 30-day sprint.' 
+                        : 'Sign in with your registered credentials to continue your 30-day challenge.'}
+                    </p>
+                  </div>
+
+                  {/* Error Notification */}
+                  {authError && (
+                    <div className="p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-display flex items-start gap-2 animate-in fade-in">
+                      <span>⚠️</span>
+                      <span>{authError}</span>
+                    </div>
+                  )}
+
+                  {authSuccess && (
+                    <div className="p-2.5 rounded-xl bg-[#00885d]/20 border border-[#4edea3]/40 text-[#4edea3] text-xs font-display">
+                      <span>✓ {authSuccess}</span>
+                    </div>
+                  )}
+
+                  {/* Temporarily commented out Social Logins & Divider
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const user = { name: 'Karthik (Google)', email: 'karthik@gmail.com', streak: 12 };
+                        localStorage.setItem('daybyday_auth_user', JSON.stringify(user));
+                        sound.playMilestone();
+                        setCurrentUser(user);
+                      }}
+                      className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-display font-semibold text-white transition-all shadow-sm cursor-pointer"
+                    >
+                      <span className="font-bold text-red-400">G</span>
+                      <span>Continue with Google</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const user = { name: 'Karthik (Apple)', email: 'karthik@apple.com', streak: 12 };
+                        localStorage.setItem('daybyday_auth_user', JSON.stringify(user));
+                        sound.playMilestone();
+                        setCurrentUser(user);
+                      }}
+                      className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-display font-semibold text-white transition-all shadow-sm cursor-pointer"
+                    >
+                      <span></span>
+                      <span>Continue with Apple</span>
+                    </button>
+                  </div>
+
+                  <div className="relative flex items-center justify-center">
+                    <div className="w-full border-t border-white/10"></div>
+                    <span className="absolute bg-[#0f172a] px-3 text-[10px] font-display font-bold uppercase tracking-widest text-[#908fa0]">
+                      OR CONTINUE WITH EMAIL
+                    </span>
+                  </div>
+                  */}
+
+                  {/* Form */}
+                  <form onSubmit={handleAuthSubmit} className="space-y-3.5">
+                    {authMode === 'signup' && (
+                      <div className="space-y-1">
+                        <label className="text-xs font-display font-semibold text-[#908fa0] block">Full Name</label>
+                        <div className="relative">
+                          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs">👤</span>
+                          <input
+                            type="text"
+                            required
+                            value={authName}
+                            onChange={(e) => { setAuthName(e.target.value); if (authError) setAuthError(''); }}
+                            placeholder="e.g. Karthik Vignesh"
+                            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#131b2e] border border-white/10 text-xs text-white focus:border-[#8083ff] focus:outline-none"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-display font-semibold text-[#908fa0] block">Email Address</label>
+                      <div className="relative">
+                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs">✉️</span>
+                        <input
+                          type="email"
+                          required
+                          value={authEmail}
+                          onChange={(e) => { setAuthEmail(e.target.value); if (authError) setAuthError(''); }}
+                          placeholder="alex@example.com"
+                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#131b2e] border border-white/10 text-xs text-white focus:border-[#8083ff] focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between">
+                        <label className="text-xs font-display font-semibold text-[#908fa0]">Password</label>
+                        {authMode === 'signin' && (
+                          <button
+                            type="button"
+                            onClick={() => alert('Password reset link sent to your registered email!')}
+                            className="text-xs font-display text-[#908fa0] hover:text-[#c0c1ff]"
+                          >
+                            Forgot password?
+                          </button>
+                        )}
+                      </div>
+                      <div className="relative">
+                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs">🔒</span>
+                        <input
+                          type={showAuthPassword ? "text" : "password"}
+                          required
+                          value={authPassword}
+                          onChange={(e) => { setAuthPassword(e.target.value); if (authError) setAuthError(''); }}
+                          placeholder="Enter your password..."
+                          className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#131b2e] border border-white/10 text-xs text-white focus:border-[#8083ff] focus:outline-none font-mono"
+                        />
+                        {/* Working Password Eye Toggle */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setShowAuthPassword(prev => !prev);
+                          }}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#908fa0] hover:text-white p-1 cursor-pointer focus:outline-none"
+                          title={showAuthPassword ? "Hide password" : "Show password"}
+                        >
+                          {showAuthPassword ? "👁️‍🗨️" : "👁️"}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs pt-1">
+                      <label className="flex items-center gap-2 cursor-pointer text-[#908fa0]">
+                        <input type="checkbox" defaultChecked className="rounded bg-[#131b2e]" />
+                        <span>Remember me for 30 days</span>
+                      </label>
+                      <span className="text-[11px] font-semibold text-[#4edea3]">🛡️ End-to-End Encrypted</span>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#c0c1ff] via-[#8083ff] to-[#6366F1] text-[#07006c] font-display font-black text-xs sm:text-sm tracking-wide shadow-[0_4px_24px_rgba(128,131,255,0.4)] hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>{authMode === 'signup' ? 'Create Account & Start Sprint' : 'Sign In to Tracker'}</span>
+                      <span>→</span>
+                    </button>
+                  </form>
+                </div>
+
+                <div className="text-center pt-2 border-t border-white/5">
+                  <p className="text-xs font-display text-[#908fa0]">
+                    {authMode === 'signup' ? 'Already have an account?' : "Don't have an account yet?"}{' '}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAuthMode(authMode === 'signup' ? 'signin' : 'signup');
+                        setAuthError('');
+                        setAuthSuccess('');
+                        setAuthPassword('');
+                      }}
+                      className="text-white hover:text-[#c0c1ff] font-bold underline underline-offset-2 ml-1 cursor-pointer"
+                    >
+                      {authMode === 'signup' ? 'Sign in' : 'Sign up for free'}
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <footer className="text-center text-[11px] font-display text-[#908fa0] py-3 z-10 space-x-2">
+              <span>© {new Date().getFullYear()} DayByDay Tracker. All rights reserved.</span>
+              <span>•</span>
+              <a href="#" className="hover:text-white">Terms of Service</a>
+              <span>•</span>
+              <a href="#" className="hover:text-white">Privacy Policy</a>
+            </footer>
+          </div>
+        );
+      }
+
+      return (
+        <div className="min-h-screen flex bg-[#0b1326] text-[#dae2fd] font-sans antialiased selection:bg-[#6366F1] selection:text-white">
+          
+          {/* 1. LEFT SIDEBAR */}
+          <aside className="w-64 bg-[#060e20] border-r border-[#171f33] flex flex-col justify-between shrink-0 min-h-screen sticky top-0 z-30 select-none">
+            <div>
+              {/* Logo */}
+              <div className="p-5 flex items-center gap-3 border-b border-[#171f33]/60">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#6366F1] to-[#8083ff] p-[1.5px] shadow-[0_0_16px_rgba(99,102,241,0.4)]">
+                  <div className="w-full h-full bg-[#0b1326] rounded-xl flex items-center justify-center font-bold text-[#c0c1ff]">
+                    ⚡
+                  </div>
+                </div>
+                <div>
+                  <h1 className="font-display font-extrabold text-base tracking-tight text-white leading-tight">
+                    DayByDay
+                  </h1>
+                  <p className="text-[10px] font-display font-bold uppercase tracking-wider text-[#908fa0]">
+                    30-Day Habit Tracker
+                  </p>
+                </div>
+              </div>
+
+              {/* Navigation links */}
+              <nav className="p-3 space-y-1">
+                {navItems.map((item) => {
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-display font-semibold transition-all ${
+                        isActive
+                          ? 'bg-[#8083ff] text-[#0b1326] font-bold shadow-[0_4px_16px_rgba(128,131,255,0.35)]'
+                          : 'text-[#c7c4d7] hover:text-white hover:bg-[#171f33]/70'
+                      }`}
+                    >
+                      <span className="text-sm">{item.icon}</span>
+                      <span>{item.label}</span>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Bottom Sprint Streak widget */}
+            <div className="p-4 m-3 rounded-2xl bg-[#131b2e] border border-white/5 space-y-2.5">
+              <div className="flex items-center justify-between text-[11px] font-display font-bold uppercase tracking-wider text-[#908fa0]">
+                <span className="flex items-center gap-1.5 text-white">
+                  <span>🔥</span> SPRINT STREAK
+                </span>
+                <span className="text-[#4edea3] text-xs">⚡</span>
+              </div>
+              <div>
+                <span className="text-xl font-display font-extrabold text-white tabular-nums tracking-tight">
+                  12
+                </span>
+                <span className="text-xs text-[#908fa0] ml-1.5 font-medium">days unbroken</span>
+              </div>
+              <div className="w-full h-1.5 rounded-full bg-[#171f33] overflow-hidden">
+                <div className="h-full rounded-full bg-gradient-to-r from-[#10B981] to-[#4edea3] w-[40%]"></div>
+              </div>
+            </div>
+          </aside>
+
+          {/* 2. MAIN WORKSPACE */}
+          <div className="flex-1 flex flex-col min-w-0">
+            
+            {/* TOP HEADER */}
+            <header className="h-16 px-6 bg-[#0b1326]/90 backdrop-blur-md border-b border-[#171f33] flex items-center justify-between sticky top-0 z-20">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#131b2e] border border-white/10 text-xs font-display cursor-pointer hover:border-[#8083ff]/50 transition-all">
+                  <span className="font-bold text-white max-w-[200px] truncate">
+                    {activeChallenge.title}
+                  </span>
+                  <span className="text-[#908fa0]">•</span>
+                  <span className="text-[#c0c1ff] font-semibold tabular-nums">
+                    Day 14 of 30
+                  </span>
+                  <span className="text-xs text-[#908fa0]">▾</span>
+                </div>
+
+                <div className="hidden xl:flex items-center text-xs font-display italic text-[#c7c4d7]/90 px-3 py-1 rounded-full bg-[#131b2e]/60 border border-white/5">
+                  <span>"Indha naal ungaloda step forward, thodarnthu pannunga!"</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#571bc1]/35 border border-[#8083ff]/30 text-[#d0bcff] text-xs font-display font-bold">
+                  <span>🔥</span>
+                  <span className="tabular-nums">12 Days Streak</span>
+                </div>
+
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#00885d]/30 border border-[#4edea3]/40 text-[#4edea3] text-xs font-display font-bold">
+                  <span>⚡</span>
+                  <span className="tabular-nums">40% Today</span>
+                </div>
+
+                <button
+                  onClick={() => setIsNewModalOpen(true)}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#8083ff] hover:bg-[#6c70ff] text-[#0b1326] font-display font-bold text-xs shadow-[0_0_16px_rgba(128,131,255,0.3)] transition-all"
+                >
+                  <span className="text-sm font-bold">+</span>
+                  <span>New Challenge</span>
+                </button>
+
+                <button
+                  onClick={() => alert('Notifications: All daily routines on track! 🔥')}
+                  className="p-2 rounded-xl bg-[#131b2e] border border-white/5 text-[#c7c4d7] hover:text-white"
+                  title="Notifications"
+                >
+                  🔔
+                </button>
+
+                <div className="relative pl-1">
+                  <button
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    className="flex items-center gap-2 cursor-pointer focus:outline-none"
+                    title={currentUser ? `${currentUser.name} (${currentUser.email})` : 'Account'}
+                  >
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#6366F1] to-[#8083ff] p-[1.5px] shadow-[0_0_12px_rgba(99,102,241,0.4)]">
+                      <div className="w-full h-full bg-[#171f33] rounded-full flex items-center justify-center font-display font-black text-xs text-[#c0c1ff]">
+                        {currentUser?.name ? currentUser.name.trim().charAt(0).toUpperCase() : 'U'}
+                      </div>
+                    </div>
+                  </button>
+                  {isProfileOpen && (
+                    <div className="absolute right-0 mt-2 w-52 rounded-xl bg-[#131b2e] border border-white/10 shadow-2xl p-2 z-50 space-y-1 animate-in fade-in duration-150">
+                      <div className="px-3 py-2 border-b border-white/5 flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-full bg-[#8083ff] text-[#07006c] font-display font-black text-xs flex items-center justify-center shrink-0">
+                          {currentUser?.name ? currentUser.name.trim().charAt(0).toUpperCase() : 'U'}
+                        </div>
+                        <div className="overflow-hidden">
+                          <p className="text-xs font-display font-bold text-white truncate">{currentUser?.name || 'Achiever'}</p>
+                          <p className="text-[10px] text-[#908fa0] truncate">{currentUser?.email || 'user@daybyday.app'}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          localStorage.removeItem('daybyday_auth_user');
+                          setCurrentUser(null);
+                          setIsProfileOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold text-rose-300 hover:bg-rose-500/10 transition-all text-left cursor-pointer"
+                      >
+                        <span>🚪</span>
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </header>
+
+            {/* ROUTED CONTENT */}
+            <main className="flex-1 p-6 sm:p-8 max-w-7xl w-full mx-auto space-y-8">
+              
+              {/* SCREEN 1: My Challenges (Sprint Hub & Archives) - EXACT MATCH WITH PHOTO */}
+              {activeTab === 'challenges' && (
+                <div className="space-y-8 animate-in fade-in duration-200">
+                  
+                  {/* Title & Controls */}
+                  <div>
+                    <div className="flex items-center gap-2 text-xs font-display font-bold uppercase tracking-wider text-[#908fa0] mb-1.5">
+                      <span>🧭</span> SPRINT HUB & ARCHIVES
+                    </div>
+                    <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight">
+                      My Challenges
+                    </h1>
+                    <p className="text-sm text-[#908fa0] mt-1 max-w-3xl leading-relaxed">
+                      Manage active 30-day sprints, archived victories, and explore curated habit templates designed for lasting transformation.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-6">
+                      <div className="flex flex-wrap items-center gap-2.5 flex-1 max-w-2xl">
+                        <div className="relative flex-1 min-w-[200px]">
+                          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-[#908fa0]">🔍</span>
+                          <input
+                            type="text"
+                            placeholder="Search challenges..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-9 pr-4 py-2 rounded-xl bg-[#131b2e] border border-white/5 text-xs text-white placeholder:text-[#908fa0] focus:outline-none focus:border-[#8083ff]/60"
+                          />
+                        </div>
+
+                        <select
+                          value={selectedCategory}
+                          onChange={(e) => setSelectedCategory(e.target.value)}
+                          className="px-3.5 py-2 rounded-xl bg-[#131b2e] border border-white/5 text-xs font-display font-semibold text-[#c7c4d7] focus:outline-none cursor-pointer"
+                        >
+                          <option value="All">All Categories</option>
+                          <option value="Fitness">Fitness & Health</option>
+                          <option value="Productivity">Productivity</option>
+                        </select>
+                      </div>
+
+                      <button
+                        onClick={() => setIsNewModalOpen(true)}
+                        className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#8083ff] hover:bg-[#6c70ff] text-[#0b1326] font-display font-bold text-xs shadow-[0_0_20px_rgba(128,131,255,0.35)] shrink-0"
+                      >
+                        <span>+</span>
+                        <span>Create New Sprint</span>
+                      </button>
+                    </div>
+
+                    {/* Filter Tabs */}
+                    <div className="flex items-center gap-2 mt-5 border-b border-[#171f33] pb-3 text-xs font-display font-semibold">
+                      {[
+                        { id: 'all', label: 'All Challenges (4)' },
+                        { id: 'in_progress', label: 'In Progress (2)' },
+                        { id: 'completed', label: 'Completed (1)' },
+                        { id: 'saved', label: 'Saved Templates (3)' }
+                      ].map((tab) => (
+                        <button
+                          key={tab.id}
+                          onClick={() => setActiveFilterTab(tab.id)}
+                          className={`px-3.5 py-1.5 rounded-xl transition-all ${
+                            activeFilterTab === tab.id
+                              ? 'bg-[#171f33] text-white border border-white/10 font-bold'
+                              : 'text-[#908fa0] hover:text-white'
+                          }`}
+                        >
+                          {tab.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Section 1: Active Sprints in Execution */}
+                  <section className="space-y-4">
+                    <div className="flex items-center justify-between text-xs font-display font-bold">
+                      <div className="flex items-center gap-2 text-white">
+                        <span className="w-2 h-2 rounded-full bg-[#4edea3] shadow-[0_0_8px_#4edea3]"></span>
+                        <span className="tracking-wide">Active Sprints in Execution</span>
+                      </div>
+                      <span className="text-[11px] text-[#908fa0] uppercase tracking-wider">
+                        2 OF 3 ACTIVE LIMIT USED
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      
+                      {/* CARD 1: 30-Day Workout & Strength Sprint */}
+                      <div className="rounded-2xl bg-[#131b2e] border border-white/10 p-6 flex flex-col justify-between hover:border-[#8083ff]/30 transition-all space-y-5">
+                        <div>
+                          <div className="flex items-start justify-between gap-3 mb-3">
+                            <div className="space-y-1">
+                              <span className="text-[10px] font-display font-extrabold uppercase tracking-wider text-[#908fa0] block">
+                                FITNESS & HEALTH • Daily 7:00 AM
+                              </span>
+                              <h3 className="font-display font-extrabold text-xl text-white tracking-tight">
+                                30-Day Workout & Strength Sprint
+                              </h3>
+                            </div>
+
+                            <span className="px-2.5 py-1 rounded-full bg-[#571bc1]/40 border border-[#8083ff]/40 text-[#c0c1ff] text-[11px] font-display font-bold flex items-center gap-1 shrink-0">
+                              <span>🔥</span> 12-Day Streak
+                            </span>
+                          </div>
+
+                          <div className="grid grid-cols-3 gap-2 py-3 border-y border-white/5 text-xs font-display">
+                            <div>
+                              <span className="text-[#908fa0] text-[10px] uppercase block">Timeline</span>
+                              <span className="text-sm font-bold text-white tabular-nums">Day 14 <span className="text-[#908fa0] font-normal text-xs">/ 30</span></span>
+                            </div>
+                            <div>
+                              <span className="text-[#908fa0] text-[10px] uppercase block">Completion</span>
+                              <span className="text-sm font-bold text-[#4edea3] tabular-nums">46.7%</span>
+                            </div>
+                            <div>
+                              <span className="text-[#908fa0] text-[10px] uppercase block">Success Consistency</span>
+                              <span className="text-sm font-bold text-white tabular-nums flex items-center gap-1">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#4edea3]"></span> 11 Perfect Days
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* 30 Stacked Progress Bars */}
+                          <div className="mt-4 space-y-1.5">
+                            <div className="flex items-center justify-between text-[11px] font-display text-[#908fa0]">
+                              <span>Phase Progress (Days 1–30)</span>
+                              <span className="text-white font-medium">11 Full • 2 Partial • 1 Missed</span>
+                            </div>
+
+                            <div className="space-y-1 pt-1">
+                              {Array.from({ length: 30 }, (_, i) => {
+                                const dayIdx = i + 1;
+                                let barBg = 'bg-[#171f33] opacity-60';
+                                if (dayIdx <= 11) barBg = 'bg-[#4edea3] shadow-[0_0_6px_rgba(78,222,163,0.3)]';
+                                else if (dayIdx === 12 || dayIdx === 13) barBg = 'bg-[#fb923c]';
+                                else if (dayIdx === 14) barBg = 'bg-[#c0c1ff] shadow-[0_0_8px_rgba(192,193,255,0.6)] animate-pulse';
+
+                                return (
+                                  <div
+                                    key={dayIdx}
+                                    className={`h-1.5 w-full rounded-full transition-all ${barBg}`}
+                                    title={`Day ${dayIdx}`}
+                                  />
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Card 1 Bottom */}
+                        <div className="space-y-3 pt-2">
+                          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#0b1326] border border-white/5 text-xs text-[#c7c4d7]">
+                            <div className="flex items-center gap-2 text-[11px] font-display">
+                              <span>⏰</span>
+                              <span>TODAY'S REMAINING ROUTINE: <strong className="text-white">20 Push-ups & 3km Walk scheduled</strong></span>
+                            </div>
+                            <span className="text-[10px] font-display text-[#908fa0] px-2 py-0.5 rounded bg-white/5">
+                              Due 8:00 PM
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="text-[11px] font-display italic text-[#908fa0]">
+                              "Indha vaaram super pace, keep pushing!"
+                            </span>
+
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => setActiveTab('analytics')}
+                                className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-display font-semibold text-[#c7c4d7] hover:text-white transition-all"
+                              >
+                                📈 Analytics
+                              </button>
+                              <button
+                                onClick={() => setActiveTab('today')}
+                                className="px-3.5 py-1.5 rounded-xl bg-[#8083ff] hover:bg-[#6c70ff] text-[#0b1326] text-xs font-display font-bold shadow-[0_0_12px_rgba(128,131,255,0.3)] transition-all"
+                              >
+                                ✓ Open Today's Tasks
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      {/* CARD 2: 30 Days Morning Deep Work */}
+                      <div className="rounded-2xl bg-[#131b2e] border border-white/10 p-6 flex flex-col justify-between hover:border-[#8083ff]/30 transition-all space-y-5">
+                        <div>
+                          <div className="flex items-start justify-between gap-3 mb-3">
+                            <div className="space-y-1">
+                              <span className="text-[10px] font-display font-extrabold uppercase tracking-wider text-[#908fa0] block">
+                                PRODUCTIVITY • On Track
+                              </span>
+                              <h3 className="font-display font-extrabold text-xl text-white tracking-tight">
+                                30 Days Morning Deep Work
+                              </h3>
+                            </div>
+
+                            <span className="px-2.5 py-1 rounded-full bg-[#571bc1]/40 border border-[#8083ff]/40 text-[#c0c1ff] text-[11px] font-display font-bold flex items-center gap-1 shrink-0">
+                              <span>🔥</span> 8 Days
+                            </span>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-2 py-3 border-y border-white/5 text-xs font-display">
+                            <div>
+                              <span className="text-[#908fa0] text-[10px] uppercase block">Progression</span>
+                              <span className="text-sm font-bold text-white tabular-nums">Day 8 <span className="text-[#908fa0] font-normal text-xs">of 30</span></span>
+                            </div>
+                            <div>
+                              <span className="text-[#908fa0] text-[10px] uppercase block">Completed</span>
+                              <span className="text-sm font-bold text-[#4edea3] tabular-nums">26.6%</span>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 space-y-1.5">
+                            <div className="w-full h-2 rounded-full bg-[#171f33] overflow-hidden">
+                              <div className="h-full rounded-full bg-gradient-to-r from-[#8083ff] to-[#4edea3] w-[26.6%]"></div>
+                            </div>
+                            <div className="text-right text-[10px] font-display text-[#908fa0]">
+                              22 days remaining to mastery
+                            </div>
+                          </div>
+
+                          {/* Focus Checklist */}
+                          <div className="mt-5 space-y-2">
+                            <span className="text-[11px] font-display font-extrabold uppercase tracking-wider text-[#c7c4d7] block">
+                              TODAY'S FOCUS CHECKLIST ({deepWorkTasks.filter(t => t.done).length}/3 DONE)
+                            </span>
+
+                            <div className="space-y-2">
+                              {deepWorkTasks.map(t => (
+                                <div
+                                  key={t.id}
+                                  onClick={() => toggleDeepWork(t.id)}
+                                  className={`flex items-center gap-3 p-2.5 rounded-xl border cursor-pointer select-none transition-all ${
+                                    t.done ? 'bg-[#00885d]/10 border-[#4edea3]/20 text-[#c7c4d7]' : 'bg-[#0b1326] border-white/5 text-white hover:border-white/15'
+                                  }`}
+                                >
+                                  <span className={`text-sm ${t.done ? 'text-[#4edea3]' : 'text-[#908fa0]'}`}>
+                                    {t.done ? '✓' : '○'}
+                                  </span>
+                                  <span className={`text-xs font-display ${t.done ? 'line-through opacity-70' : ''}`}>
+                                    {t.text}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <div className="flex items-center justify-between pt-3 border-t border-white/5 text-xs text-[#908fa0]">
+                          <span className="text-[11px] font-display">Created Nov 08, 2024</span>
+                          <button
+                            onClick={() => setActiveTab('calendar')}
+                            className="flex items-center gap-1 text-[#8083ff] hover:text-[#c0c1ff] font-display font-bold text-xs transition-colors"
+                          >
+                            <span>Manage Sprint</span>
+                            <span>➔</span>
+                          </button>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </section>
+
+                  {/* Section 2: Archived Victories */}
+                  <section className="space-y-4">
+                    <div className="flex items-center justify-between text-xs font-display font-bold">
+                      <div className="flex items-center gap-2 text-white">
+                        <span>🏆</span>
+                        <span className="tracking-wide">Archived Victories</span>
+                      </div>
+                      <span className="text-[11px] text-[#908fa0] uppercase tracking-wider">
+                        1 COMPLETED CHALLENGE
+                      </span>
+                    </div>
+
+                    <div className="rounded-2xl bg-[#131b2e] border border-white/10 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="flex items-start sm:items-center gap-3.5">
+                        <div className="w-12 h-12 rounded-2xl bg-[#00885d]/25 border border-[#4edea3]/30 flex items-center justify-center shrink-0 font-bold text-xl text-[#4edea3]">
+                          ✓
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex flex-wrap items-center gap-2 text-[10px] font-display font-bold">
+                            <span className="px-2 py-0.5 rounded-full bg-[#00885d]/30 text-[#4edea3]">
+                              100% FINISHED
+                            </span>
+                            <span className="text-[#908fa0]">• Completed Nov 02, 2024 •</span>
+                            <span className="text-[#c0c1ff]">Mindfulness Master Badge Earned</span>
+                          </div>
+                          
+                          <h4 className="font-display font-bold text-base text-white">
+                            30 Days Digital Detox & Sleep Reset
+                          </h4>
+
+                          <div className="flex flex-wrap items-center gap-3 text-xs text-[#908fa0] font-display">
+                            <span className="text-[#4edea3]">✓ Final Score: 28/30 Days Perfect</span>
+                            <span>• Screen off at 10:30 PM maintained</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                        <button
+                          onClick={() => handleEnroll('30 Days Digital Detox & Sleep Reset')}
+                          className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-display font-semibold text-[#c7c4d7] hover:text-white transition-all"
+                        >
+                          🔄 Restart Sprint
+                        </button>
+                        <button
+                          onClick={() => setActiveTab('completion')}
+                          className="px-3.5 py-1.5 rounded-xl bg-[#8083ff] hover:bg-[#6c70ff] text-[#0b1326] text-xs font-display font-bold shadow-[0_0_12px_rgba(128,131,255,0.3)] transition-all"
+                        >
+                          🎖️ View Certificate & Badge
+                        </button>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Section 3: READY-TO-START BLUEPRINTS */}
+                  <section className="space-y-4">
+                    <div className="flex items-center justify-between text-xs font-display font-bold">
+                      <div className="flex items-center gap-2 text-white">
+                        <span>✨</span>
+                        <span className="tracking-wide">READY-TO-START BLUEPRINTS</span>
+                        <span className="text-[#908fa0] font-normal">• Explore Curated 30-Day Templates</span>
+                      </div>
+                      <span className="text-[11px] text-[#8083ff] font-display font-semibold cursor-pointer">
+                        View All 24 Templates ➔
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {[
+                        { title: '30 Days Hydration & Clean Eating', icon: '💧', rating: '4.9 (1.2k)', meta: '30 Days • Daily', desc: 'Maintain 3 Liters of water daily + absolute zero processed refined sugar for peak vitality.' },
+                        { title: '30 Days Read 20 Pages Daily', icon: '📖', rating: '4.8 (980)', meta: '30 Days • 20 mins', desc: 'Build an ironclad reading ritual. Finish 2 complete non-fiction masterworks in 1 single month.' },
+                        { title: '30 Days 10,000 Steps Daily', icon: '👟', rating: '4.9 (2.4k)', meta: '30 Days • Cardio', desc: 'Active cardio recovery & fat loss base building. Track everyday walks with continuous device sync.' }
+                      ].map((tmpl, idx) => (
+                        <div key={idx} className="rounded-2xl bg-[#131b2e] border border-white/10 p-5 flex flex-col justify-between hover:border-[#8083ff]/40 transition-all space-y-4">
+                          <div>
+                            <div className="flex items-center justify-between text-xs text-[#908fa0] mb-2.5">
+                              <span className="text-xl p-1.5 rounded-xl bg-white/5">{tmpl.icon}</span>
+                              <span className="font-display font-bold text-amber-300">★ {tmpl.rating}</span>
+                            </div>
+                            <h4 className="font-display font-bold text-sm text-white mb-1.5">{tmpl.title}</h4>
+                            <p className="text-xs text-[#908fa0] leading-relaxed">{tmpl.desc}</p>
+                          </div>
+                          <div className="flex items-center justify-between pt-3 border-t border-white/5 text-xs font-display">
+                            <span className="text-[#908fa0] text-[11px]">{tmpl.meta}</span>
+                            <button
+                              onClick={() => handleEnroll(tmpl.title)}
+                              className="px-3 py-1 rounded-lg bg-white/5 hover:bg-[#8083ff] hover:text-[#0b1326] text-[#c7c4d7] text-xs font-bold transition-all"
+                            >
+                              + Enroll
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+
+                  {/* Section 4: Tamil Motivational Banner */}
+                  <div className="rounded-2xl bg-[#131b2e] border border-white/10 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="flex items-start sm:items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#571bc1]/40 border border-[#8083ff]/30 flex items-center justify-center shrink-0">
+                        <span className="font-display font-black text-lg text-[#c0c1ff]">99</span>
+                      </div>
+                      <div>
+                        <blockquote className="font-display font-semibold text-sm sm:text-base text-white leading-relaxed">
+                          "Oru naalil periya vetri varadhu, aana ovvoru naalum podra chinna chinna effort kandippa oru naal periya vetriyai tharum!"
+                        </blockquote>
+                        <p className="text-[11px] font-display font-bold tracking-wider text-[#908fa0] uppercase mt-1">
+                          — Coach Vignesh K. • Head of Sprint Performance
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 self-end sm:self-center shrink-0 text-[#908fa0]">
+                      <button onClick={() => alert('Quote bookmarked!')} className="p-2 rounded-xl hover:bg-white/5 hover:text-white" title="Bookmark">
+                        🔖
+                      </button>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard?.writeText("Oru naalil periya vetri varadhu, aana ovvoru naalum podra chinna chinna effort kandippa oru naal periya vetriyai tharum! — Coach Vignesh K.");
+                          alert('Quote copied to clipboard!');
+                        }}
+                        className="p-2 rounded-xl hover:bg-white/5 hover:text-white"
+                        title="Share"
+                      >
+                        📤
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              )}
+
+                            {/* SCREEN 0: Dashboard (Home) - EXACT MATCH WITH STITCH SCREEN 1db983cbf4a04fed9d28b3c01ac0ef92 */}
+              {activeTab === 'dashboard' && (() => {
+                const sprintDays = Array.from({ length: 30 }, (_, i) => {
+                  const day = i + 1;
+                  let type = 'future';
+                  if (day <= 3 || day === 5 || day === 6 || (day >= 8 && day <= 12)) {
+                    type = 'completed';
+                  } else if (day === 4 || day === 13) {
+                    type = 'partial';
+                  } else if (day === 7) {
+                    type = 'missed';
+                  } else if (day === 14) {
+                    type = 'today';
+                  } else {
+                    type = 'future';
+                  }
+                  return { day, type };
+                });
+
+                return (
+                  <div className="space-y-6 animate-in fade-in duration-200">
+                    
+                    {/* 1. TOP HERO ROW: WELCOME BANNER + DAILY MOTIVATION */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                      
+                      {/* Left Welcome Card */}
+                      <div className="lg:col-span-2 rounded-2xl bg-[#131b2e] border border-white/5 p-6 sm:p-7 flex flex-col justify-between space-y-4">
+                        <div className="space-y-2">
+                          <div className="text-xs font-display font-semibold text-[#4edea3] tracking-wide flex items-center gap-2">
+                            <span>Thursday, Oct 24, 2024</span>
+                            <span className="text-[#908fa0]">•</span>
+                            <span className="text-[#c0c1ff]">Day 14 of 30</span>
+                          </div>
+
+                          <h1 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
+                            Welcome back, {currentUser?.name || 'Achiever'}
+                          </h1>
+
+                          <p className="font-sans text-xs sm:text-sm text-[#908fa0] leading-relaxed max-w-xl">
+                            Consistency over intensity is your superpower. You are 47% through your 30-Day Fitness Sprint.
+                          </p>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-wrap items-center gap-3 pt-2">
+                          <button
+                            onClick={() => setActiveTab('today')}
+                            className="px-4 py-2 rounded-xl bg-[#8083ff] hover:bg-[#9295ff] text-[#0b1326] font-display font-bold text-xs flex items-center gap-1.5 transition-all shadow-[0_0_16px_rgba(128,131,255,0.3)] cursor-pointer"
+                          >
+                            <span className="text-sm font-black">+</span>
+                            <span>Add Task</span>
+                          </button>
+
+                          <button
+                            onClick={() => setActiveTab('calendar')}
+                            className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-display font-semibold text-xs flex items-center gap-1.5 transition-all"
+                          >
+                            <span>📅</span>
+                            <span>Sprint View</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Right Motivation Card */}
+                      <div className="rounded-2xl bg-[#131b2e] border border-white/5 p-6 flex flex-col justify-between space-y-4">
+                        <div className="space-y-2.5">
+                          <div className="flex items-center justify-between text-[11px] font-display font-bold uppercase tracking-wider text-[#908fa0]">
+                            <span>DAILY MOTIVATION</span>
+                            <span className="text-xs text-[#908fa0] font-mono">99</span>
+                          </div>
+
+                          <p className="font-display font-medium text-xs sm:text-sm text-white italic leading-relaxed">
+                            “Daily konjam konjam improve aana podhum, 30 days la un life-la difference theriyum!”
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between text-[11px] font-display pt-2 border-t border-white/5">
+                          <span className="flex items-center gap-1.5 text-[#4edea3] font-semibold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#4edea3]"></span>
+                            3 of 5 tasks finished today
+                          </span>
+                          <span className="text-[#908fa0]">
+                            Tamil Proverb
+                          </span>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* 2. 4-METRICS STATS ROW */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      
+                      <div className="rounded-2xl bg-[#131b2e] border border-white/5 p-4 space-y-2">
+                        <div className="flex items-center justify-between text-[10px] font-display font-bold uppercase tracking-wider text-[#908fa0]">
+                          <span>CURRENT CHALLENGE</span>
+                          <span>↗</span>
+                        </div>
+                        <div>
+                          <h4 className="font-display font-bold text-base text-white">Fitness Sprint</h4>
+                          <p className="text-[11px] font-display text-[#908fa0]">Day 14 of 30 (47%)</p>
+                        </div>
+                        <div className="w-full h-1 rounded-full bg-white/10 overflow-hidden">
+                          <div className="h-full rounded-full bg-[#8083ff]" style={{ width: '47%' }}></div>
+                        </div>
+                      </div>
+
+                      <div className="rounded-2xl bg-[#131b2e] border border-white/5 p-4 space-y-2">
+                        <div className="flex items-center justify-between text-[10px] font-display font-bold uppercase tracking-wider text-[#908fa0]">
+                          <span>TODAY'S COMPLETION</span>
+                          <span className="text-[#4edea3]">✓</span>
+                        </div>
+                        <div>
+                          <h4 className="font-display font-bold text-base text-white">3 / 5 Done</h4>
+                          <p className="text-[11px] font-display text-[#4edea3]">60% finished</p>
+                        </div>
+                        <div className="w-full h-1 rounded-full bg-white/10 overflow-hidden">
+                          <div className="h-full rounded-full bg-[#4edea3]" style={{ width: '60%' }}></div>
+                        </div>
+                      </div>
+
+                      <div className="rounded-2xl bg-[#131b2e] border border-white/5 p-4 space-y-2">
+                        <div className="flex items-center justify-between text-[10px] font-display font-bold uppercase tracking-wider text-[#908fa0]">
+                          <span>ACTIVE STREAK</span>
+                          <span>🔥</span>
+                        </div>
+                        <div>
+                          <h4 className="font-display font-bold text-base text-white flex items-center gap-1.5">
+                            12 Days 🔥
+                          </h4>
+                          <p className="text-[11px] font-display text-[#908fa0]">Personal best: 18 days</p>
+                        </div>
+                        <div className="w-full h-1 rounded-full bg-white/10 overflow-hidden">
+                          <div className="h-full rounded-full bg-[#4edea3]" style={{ width: '66%' }}></div>
+                        </div>
+                      </div>
+
+                      <div className="rounded-2xl bg-[#131b2e] border border-white/5 p-4 space-y-2">
+                        <div className="flex items-center justify-between text-[10px] font-display font-bold uppercase tracking-wider text-[#908fa0]">
+                          <span>CONSISTENCY</span>
+                          <span>📈</span>
+                        </div>
+                        <div>
+                          <h4 className="font-display font-bold text-base text-white">89% On Pace</h4>
+                          <p className="text-[11px] font-display text-[#908fa0]">16 days remaining</p>
+                        </div>
+                        <div className="w-full h-1 rounded-full bg-white/10 overflow-hidden">
+                          <div className="h-full rounded-full bg-[#8083ff]" style={{ width: '89%' }}></div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* 3. MIDDLE SECTION: TODAY'S CHECKLIST + NEXT MILESTONE */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                      
+                      <div className="lg:col-span-2 rounded-2xl bg-[#131b2e] border border-white/5 p-6 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="font-display font-bold text-base text-white">Today's Checklist</h3>
+                            <p className="text-xs text-[#908fa0]">Daily tasks to maintain streak</p>
+                          </div>
+                          <span className="text-xs font-display font-semibold text-[#908fa0]">Oct 24</span>
+                        </div>
+
+                        <div className="space-y-2.5">
+                          {[
+                            { id: 1, text: 'Morning 5km Jog & Stretch', category: 'Fitness', tag: 'bg-[#171f33] text-[#c0c1ff] border border-white/10', done: true },
+                            { id: 2, text: '20 Push-ups & Core Workout', category: 'Fitness', tag: 'bg-[#171f33] text-[#c0c1ff] border border-white/10', done: true },
+                            { id: 3, text: 'Drink 3 Litres of Water', category: 'Habit', tag: 'bg-[#571bc1]/30 text-[#d0bcff] border border-[#d0bcff]/20', done: true },
+                            { id: 4, text: '30 Minutes Evening HIIT Exercise', category: 'Fitness', tag: 'bg-[#171f33] text-[#c0c1ff] border border-white/10', done: false },
+                            { id: 5, text: 'Evening Cool-down Walk (15 mins)', category: 'Mindset', tag: 'bg-[#00885d]/20 text-[#4edea3] border border-[#4edea3]/20', done: false }
+                          ].map((t) => (
+                            <div
+                              key={t.id}
+                              className={`flex items-center justify-between p-3 rounded-xl transition-all border ${
+                                t.done
+                                  ? 'bg-[#171f33]/70 border-white/5 text-[#908fa0]'
+                                  : 'bg-[#171f33] border-white/10 text-white'
+                              }`}
+                            >
+                              <div className="flex items-center gap-3">
+                                {t.done ? (
+                                  <div className="w-5 h-5 rounded-full bg-[#00885d]/30 border border-[#4edea3]/40 flex items-center justify-center shrink-0">
+                                    <span className="text-[#4edea3] text-xs">✓</span>
+                                  </div>
+                                ) : (
+                                  <div className="w-5 h-5 rounded-full border border-[#464554] shrink-0" />
+                                )}
+                                <span className={`text-xs font-display font-medium ${t.done ? 'line-through text-[#908fa0]' : 'text-white'}`}>
+                                  {t.text}
+                                </span>
+                              </div>
+
+                              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-display font-semibold tracking-wider ${t.tag}`}>
+                                {t.category}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                          <span className="text-[11px] text-[#908fa0]">Add or manage tasks in Tasks module</span>
+                          <button
+                            type="button"
+                            onClick={() => setActiveTab('today')}
+                            className="px-3 py-1.5 rounded-lg bg-[#8083ff]/15 hover:bg-[#8083ff]/25 text-[#c0c1ff] font-display font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+                          >
+                            <span>Go to Tasks Module →</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Next Milestone Card */}
+                      <div className="rounded-2xl bg-[#131b2e] border border-white/5 p-6 flex flex-col justify-between space-y-4">
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between text-[11px] font-display font-bold uppercase tracking-wider text-[#908fa0]">
+                            <span>NEXT MILESTONE</span>
+                            <span className="text-[10px] text-[#908fa0]">IN 7 DAYS</span>
+                          </div>
+
+                          <div className="flex items-center gap-2 pt-1">
+                            <span className="text-xl">🏆</span>
+                            <h3 className="font-display font-bold text-base text-white">21-Day Habit Lock</h3>
+                          </div>
+
+                          <p className="font-sans text-xs text-[#908fa0] leading-relaxed">
+                            Day 21 solidifies psychological neural habits into effortless automated routine.
+                          </p>
+                        </div>
+
+                        <div className="space-y-2 pt-4 border-t border-white/5">
+                          <div className="flex items-center justify-between text-xs font-display">
+                            <span className="text-[#908fa0]">Milestone Target:</span>
+                            <span className="font-bold text-white tabular-nums">14 / 21 Days (66%)</span>
+                          </div>
+                          <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                            <div className="h-full rounded-full bg-[#8083ff]" style={{ width: '66%' }}></div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* 4. BOTTOM SECTION: 30-DAY SPRINT HORIZON */}
+                    <div className="rounded-2xl bg-[#131b2e] border border-white/5 p-6 space-y-5">
+                      
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                          <span>田</span>
+                          <h3 className="font-display font-bold text-sm text-white">30-Day Sprint Horizon</h3>
+                          <span className="text-[#908fa0] text-xs">•</span>
+                          <span className="text-[#908fa0] text-xs font-medium">Oct 11 to Nov 9</span>
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-3 text-[11px] font-display font-semibold text-[#908fa0]">
+                          <span className="inline-flex items-center gap-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-[#4edea3]"></span> 11 Completed
+                          </span>
+                          <span className="inline-flex items-center gap-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-[#d0bcff]"></span> 2 Partial
+                          </span>
+                          <span className="inline-flex items-center gap-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-[#c0c1ff] animate-pulse"></span> Day 14 (Today)
+                          </span>
+                          <span className="inline-flex items-center gap-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-[#171f33] border border-white/10"></span> 16 Ahead
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-5 sm:grid-cols-10 gap-2.5">
+                        {sprintDays.map(({ day, type }) => {
+                          let blockStyle = '';
+                          let textStyle = '';
+
+                          if (type === 'completed') {
+                            blockStyle = 'bg-[#4edea3]';
+                            textStyle = 'text-[#002113] font-bold';
+                          } else if (type === 'partial') {
+                            blockStyle = 'bg-[#d0bcff]';
+                            textStyle = 'text-[#23005c] font-bold';
+                          } else if (type === 'today') {
+                            blockStyle = 'bg-[#c0c1ff] ring-2 ring-white shadow-[0_0_16px_rgba(192,193,255,0.7)] animate-pulse';
+                            textStyle = 'text-[#07006c] font-black text-sm';
+                          } else if (type === 'missed') {
+                            blockStyle = 'bg-[#171f33] border border-white/5';
+                            textStyle = 'text-white/60 font-medium';
+                          } else {
+                            blockStyle = 'bg-[#131b2e] border border-white/5 opacity-80';
+                            textStyle = 'text-[#908fa0]/60 font-medium';
+                          }
+
+                          return (
+                            <div
+                              key={day}
+                              className={`h-16 rounded-xl flex items-center justify-center transition-all cursor-pointer ${blockStyle}`}
+                              title={`Day ${day}`}
+                            >
+                              <span className={`text-xs font-display tabular-nums ${textStyle}`}>
+                                {day}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                    </div>
+
+                  </div>
+                );
+              })()}
+
+
+              {/* SCREEN 2: 30-Day Calendar (EXACT MATCH WITH ATTACHED STITCH SCREENSHOT) */}
+              {activeTab === 'calendar' && (() => {
+                const calendarDays = Array.from({ length: 30 }, (_, i) => {
+                  const d = i + 1;
+                  let st = 'future';
+                  let tDone = 0;
+                  let pct = 0;
+                  let dStr = d <= 21 ? `Oct ${10 + d}` : `Nov ${d - 21 < 10 ? '0' + (d - 21) : (d - 21)}`;
+                  if (d <= 4 || (d >= 6 && d <= 8) || (d >= 10 && d <= 12)) {
+                    st = 'completed'; tDone = 5; pct = 100;
+                  } else if (d === 5) {
+                    st = 'partial'; tDone = 3; pct = 60;
+                  } else if (d === 9) {
+                    st = 'missed'; tDone = 0; pct = 0;
+                  } else if (d === 13) {
+                    st = 'partial'; tDone = 4; pct = 80;
+                  } else if (d === 14) {
+                    st = 'active_today'; tDone = 3; pct = 60;
+                  } else {
+                    st = 'future'; tDone = 0; pct = 0;
+                  }
+                  return { dayNum: d, label: `Day ${d < 10 ? '0' + d : d}`, st, date: dStr, tDone, pct };
+                });
+
+                const circRadius = 24;
+                const circ = 2 * Math.PI * circRadius;
+                const off = circ - (0.46 * circ);
+
+                return (
+                  <div className="space-y-6 animate-in fade-in duration-200">
+                    
+                    {/* Header Summary Card */}
+                    <div className="rounded-3xl bg-[#131b2e] border border-white/10 p-6 sm:p-7 space-y-5">
+                      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                        
+                        <div className="space-y-2">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-display font-bold uppercase tracking-wider bg-[#8083ff]/15 text-[#c0c1ff] border border-[#8083ff]/25">
+                              <span>⏱️</span> 30-DAY SPRINT MATRIX
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-display font-semibold bg-white/5 text-[#908fa0] border border-white/5">
+                              <span>📅</span> Oct 11 – Nov 09, 2024
+                            </span>
+                          </div>
+
+                          <h1 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight">
+                            30 Days Workout Challenge
+                          </h1>
+
+                          <div className="flex flex-wrap items-center gap-3 text-xs font-display text-[#908fa0] pt-0.5">
+                            <span className="text-[#c0c1ff] font-semibold">Day 14 in Progress</span>
+                            <span>•</span>
+                            <span className="flex items-center gap-1.5 text-white">
+                              <span className="w-2 h-2 rounded-full bg-[#4edea3]"></span> 11 Perfect
+                            </span>
+                            <span>•</span>
+                            <span className="flex items-center gap-1.5 text-white">
+                              <span className="w-2 h-2 rounded-full bg-[#d0bcff]"></span> 2 Partial
+                            </span>
+                            <span>•</span>
+                            <span className="flex items-center gap-1.5 text-white">
+                              <span className="w-2 h-2 rounded-full bg-[#f87171]"></span> 1 Missed
+                            </span>
+                            <span>•</span>
+                            <span>16 Remaining</span>
+                          </div>
+                        </div>
+
+                        {/* Right: 46% Progress & Telemetry */}
+                        <div className="flex items-center gap-6 shrink-0 self-start lg:self-center">
+                          <div className="flex items-center gap-4">
+                            <div className="relative w-16 h-16 flex items-center justify-center">
+                              <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 60 60">
+                                <circle cx="30" cy="30" r={circRadius} stroke="rgba(255, 255, 255, 0.08)" strokeWidth="5" fill="transparent" />
+                                <circle cx="30" cy="30" r={circRadius} stroke="#4edea3" strokeWidth="5" strokeDasharray={circ} strokeDashoffset={off} strokeLinecap="round" fill="transparent" />
+                              </svg>
+                              <div className="absolute inset-0 flex items-center justify-center font-bold text-white text-xs tabular-nums">
+                                46%
+                              </div>
+                            </div>
+                            <div>
+                              <span className="text-[10px] font-display font-extrabold uppercase tracking-wider text-[#908fa0] block">
+                                SPRINT PROGRESS
+                              </span>
+                              <span className="text-xl font-display font-black text-white tabular-nums">
+                                14 <span className="text-[#908fa0] text-sm font-semibold">/ 30</span>
+                              </span>
+                            </div>
+                          </div>
+
+                          <button
+                            onClick={() => setIsShareModalOpen(true)}
+                            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-display font-bold text-white transition-all"
+                          >
+                            <span>📊</span> Telemetry
+                          </button>
+                        </div>
+
+                      </div>
+
+                      {/* Filter Tabs & Legend Row */}
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-white/5 text-xs font-display">
+                        <div className="flex flex-wrap items-center gap-2 font-semibold">
+                          {[
+                            { id: 'all', label: 'All 30 Days' },
+                            { id: 'completed', label: 'Completed (11)' },
+                            { id: 'partial', label: 'Partial (2)' },
+                            { id: 'missed', label: 'Missed (1)' },
+                            { id: 'upcoming', label: 'Upcoming (16)' }
+                          ].map((f) => (
+                            <button
+                              key={f.id}
+                              onClick={() => setFilter(f.id)}
+                              className={`px-3 py-1.5 rounded-xl transition-all ${
+                                filter === f.id
+                                  ? 'bg-[#8083ff] text-[#0b1326] font-bold shadow-[0_0_12px_rgba(128,131,255,0.3)]'
+                                  : 'bg-[#0b1326] text-[#908fa0] hover:text-white border border-white/5'
+                              }`}
+                            >
+                              {f.label}
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-3 text-[11px] font-semibold text-[#908fa0]">
+                          <span className="inline-flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#4edea3]"></span> 100% Done</span>
+                          <span className="inline-flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#d0bcff]"></span> Partial</span>
+                          <span className="inline-flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#f87171]"></span> Missed</span>
+                          <span className="inline-flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#8083ff] animate-pulse"></span> Active Today</span>
+                          <span className="inline-flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[#31394d]"></span> Future</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* The 6-Column x 5-Row Matrix Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+                      {calendarDays.filter(d => {
+                        if (filter === 'all') return true;
+                        if (filter === 'completed') return d.st === 'completed';
+                        if (filter === 'partial') return d.st === 'partial';
+                        if (filter === 'missed') return d.st === 'missed';
+                        if (filter === 'upcoming') return d.st === 'future';
+                        return true;
+                      }).map((day) => {
+                        const isToday = day.st === 'active_today';
+                        const isCompleted = day.st === 'completed';
+                        const isPartial = day.st === 'partial';
+                        const isMissed = day.st === 'missed';
+                        const isFuture = day.st === 'future';
+                        const isFinale = day.dayNum === 30;
+
+                        let cardStyle = 'bg-[#131b2e] border-white/5 text-[#908fa0]';
+                        if (isToday) {
+                          cardStyle = 'bg-[#171f33] border-2 border-[#8083ff] shadow-[0_0_24px_rgba(128,131,255,0.45)] -translate-y-0.5';
+                        } else if (isCompleted) {
+                          cardStyle = 'bg-[#131b2e] border-white/10 hover:border-[#4edea3]/40';
+                        } else if (isPartial) {
+                          cardStyle = 'bg-[#131b2e] border-white/10 hover:border-[#d0bcff]/40';
+                        } else if (isMissed) {
+                          cardStyle = 'bg-[#131b2e] border-white/10 hover:border-[#f87171]/40';
+                        } else if (isFuture) {
+                          cardStyle = 'bg-[#0f172a]/70 border-white/5 opacity-70';
+                        }
+
+                        return (
+                          <div
+                            key={day.dayNum}
+                            onClick={() => {
+                              const found = activeChallenge.days.find(x => x.dayNumber === day.dayNum);
+                              setDayModal(found || { dayNumber: day.dayNum, status: isCompleted ? 'completed' : (isMissed ? 'missed' : 'pending') });
+                            }}
+                            className={`rounded-2xl border p-4 flex flex-col justify-between space-y-3 cursor-pointer select-none transition-all duration-150 hover:-translate-y-1 hover:shadow-lg relative overflow-hidden ${cardStyle}`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-display font-extrabold text-sm text-white tabular-nums">
+                                  {day.label}
+                                </span>
+                                {isToday && (
+                                  <span className="px-1.5 py-0.5 rounded text-[9px] font-display font-black tracking-wider uppercase bg-[#8083ff] text-[#0b1326]">
+                                    TODAY
+                                  </span>
+                                )}
+                              </div>
+
+                              <div>
+                                {isCompleted && (
+                                  <div className="w-5 h-5 rounded-full bg-[#00885d]/30 border border-[#4edea3]/40 flex items-center justify-center text-xs text-[#4edea3] font-bold">
+                                    ✓
+                                  </div>
+                                )}
+                                {isPartial && (
+                                  <div className="w-5 h-5 rounded-full bg-[#571bc1]/30 border border-[#d0bcff]/40 flex items-center justify-center text-[10px] text-[#d0bcff] font-bold">
+                                    ◐
+                                  </div>
+                                )}
+                                {isMissed && (
+                                  <div className="w-5 h-5 rounded-full bg-[#93000a]/30 border border-[#f87171]/40 flex items-center justify-center text-xs text-[#f87171] font-bold">
+                                    ✕
+                                  </div>
+                                )}
+                                {isToday && (
+                                  <span className="w-2.5 h-2.5 rounded-full bg-[#8083ff] shadow-[0_0_8px_#8083ff] block animate-pulse" />
+                                )}
+                                {isFuture && (
+                                  <span className="text-xs text-[#464554]">🔒</span>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="space-y-1 font-display">
+                              <span className="text-[11px] text-[#908fa0] block">
+                                {day.date}
+                              </span>
+
+                              <div className="flex items-center justify-between text-xs">
+                                <span className="text-white font-medium">
+                                  {isFuture ? '0/5 Scheduled' : `${day.tDone}/5 Tasks`}
+                                </span>
+                                <span className={`font-bold tabular-nums ${
+                                  isCompleted ? 'text-[#4edea3]' : isPartial ? 'text-[#d0bcff]' : isMissed ? 'text-[#f87171]' : isToday ? 'text-white' : 'text-[#908fa0]'
+                                }`}>
+                                  {isFuture ? 'Upcoming' : `${day.pct}%`}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="pt-1">
+                              {isFinale ? (
+                                <div className="w-full flex items-center justify-between">
+                                  <span className="px-2 py-0.5 rounded text-[9px] font-display font-extrabold uppercase tracking-wider bg-[#571bc1] text-[#c0c1ff]">
+                                    FINALE 🏆
+                                  </span>
+                                </div>
+                              ) : (
+                                <div className="w-full h-1.5 rounded-full bg-[#171f33] overflow-hidden">
+                                  {isCompleted && <div className="h-full rounded-full bg-[#4edea3] w-full" />}
+                                  {isPartial && <div className="h-full rounded-full bg-[#d0bcff]" style={{ width: `${day.pct}%` }} />}
+                                  {isToday && <div className="h-full rounded-full bg-[#8083ff] animate-pulse" style={{ width: '60%' }} />}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Bottom Motivational Quote & View Activity History */}
+                    <div className="rounded-2xl bg-[#131b2e] border border-white/10 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                      <div className="flex items-start sm:items-center gap-3.5">
+                        <div className="w-10 h-10 rounded-2xl bg-[#571bc1]/40 border border-[#8083ff]/30 flex items-center justify-center shrink-0">
+                          <span className="font-display font-black text-sm text-[#c0c1ff]">99</span>
+                        </div>
+                        <div>
+                          <blockquote className="font-display font-semibold text-xs sm:text-sm text-white leading-relaxed">
+                            "Consistency over intensity. Small wins every single day compound into transformation."
+                          </blockquote>
+                          <p className="text-[10px] font-display font-bold tracking-wider text-[#908fa0] uppercase mt-0.5">
+                            Sprint Motivation • Coach Vignesh K.
+                          </p>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => alert('Activity History: 11 Perfect Days, 2 Partial Days logged in this sprint.')}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-display font-semibold text-white transition-all shrink-0 self-end sm:self-center"
+                      >
+                        <span>📜</span>
+                        <span>View Activity History</span>
+                      </button>
+                    </div>
+
+                  </div>
+                );
+              })()}
+
+              {/* SCREEN 3: Today's Tasks */}
+              {activeTab === 'today' && (
+                <div className="space-y-6 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="text-2xl font-display font-extrabold text-white">Today's Daily Rituals</h2>
+                      <p className="text-xs text-[#908fa0]">Day 14 Non-Negotiables</p>
+                    </div>
+                    <button
+                      onClick={() => handleToggleDay(14)}
+                      className="px-4 py-2 rounded-xl bg-[#4edea3] hover:bg-[#34d399] text-[#002113] font-display font-bold text-xs"
+                    >
+                      ✓ Mark Day 14 Complete!
+                    </button>
+                  </div>
+
+                  <div className="rounded-2xl bg-[#131b2e] border border-white/10 p-6 space-y-3">
+                    {activeChallenge.habits.map(h => (
+                      <div
+                        key={h.id}
+                        onClick={() => handleToggleHabit(h.id)}
+                        className={`flex items-center justify-between p-3.5 rounded-xl border cursor-pointer ${
+                          h.completed ? 'bg-[#00885d]/10 border-[#4edea3]/20 text-[#c7c4d7] line-through' : 'bg-[#0b1326] border-white/5 text-white'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className={`text-base ${h.completed ? 'text-[#4edea3]' : 'text-[#908fa0]'}`}>
+                            {h.completed ? '✓' : '○'}
+                          </span>
+                          <span className="text-xs font-display font-medium">{h.text}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* SCREEN 4: Challenge Completion */}
+              {activeTab === 'completion' && (
+                <div className="rounded-3xl bg-[#131b2e] border-2 border-[#8083ff]/40 p-8 sm:p-12 text-center space-y-6 max-w-3xl mx-auto animate-in fade-in duration-200">
+                  <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-[#6366F1] to-[#4edea3] p-1 flex items-center justify-center text-3xl">
+                    🏆
+                  </div>
+                  <div>
+                    <span className="text-xs font-display font-bold uppercase tracking-widest text-[#908fa0]">Official Certification</span>
+                    <h3 className="font-display font-extrabold text-2xl text-white mt-1">30 Days Digital Detox & Sleep Reset</h3>
+                  </div>
+                  <p className="text-xs text-[#c7c4d7] leading-relaxed max-w-lg mx-auto">
+                    Awarded to <strong className="text-white">High Performer</strong> for executing 30 consecutive sprint milestones with 28/30 perfect days!
+                  </p>
+                  <div className="flex items-center justify-center gap-3">
+                    <button
+                      onClick={() => {
+                        if (window.confetti) window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+                      }}
+                      className="px-5 py-2.5 rounded-xl bg-[#8083ff] text-[#0b1326] font-display font-bold text-xs"
+                    >
+                      🎉 Fire Confetti Blast
+                    </button>
+                    <button
+                      onClick={() => alert('Certificate downloaded!')}
+                      className="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-display font-semibold text-xs"
+                    >
+                      📥 Download PNG
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* SCREEN 5: Settings */}
+              {activeTab === 'settings' && (
+                <div className="rounded-2xl bg-[#131b2e] border border-white/10 p-6 space-y-4 max-w-xl animate-in fade-in duration-200">
+                  <h3 className="font-display font-bold text-lg text-white">Sprint Preferences</h3>
+                  <div className="space-y-3 text-xs">
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-[#0b1326] border border-white/5">
+                      <span>Sound Chimes & Fanfares</span>
+                      <span className="text-[#4edea3] font-bold">Enabled</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-[#0b1326] border border-white/5">
+                      <span>Data Persistence</span>
+                      <span className="text-[#8083ff] font-bold">MongoDB + LocalStorage Live</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+            </main>
+
+            <footer className="mt-auto border-t border-white/5 py-4 px-6 bg-[#060e20]/80 text-xs text-[#908fa0] flex items-center justify-between">
+              <span>DayByDay — 30-Day Sprint Hub & Habit Tracker</span>
+              <span className="text-[#4edea3]">● All Systems Operational</span>
+            </footer>
+
+          </div>
+
+          {/* DAY DETAIL / JOURNAL MODAL */}
+          {dayModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+              <div className="w-full max-w-md rounded-3xl glass-card border border-white/10 p-6 shadow-modal-rim relative">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-display font-bold text-lg text-white">Day {dayModal.dayNumber} Reflection</h3>
+                  <button onClick={() => setDayModal(null)} className="text-on-surface-variant hover:text-white">✕</button>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-display font-semibold text-on-surface-variant uppercase mb-1">Status</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['completed', 'missed', 'pending'].map(st => (
+                        <button
+                          key={st}
+                          type="button"
+                          onClick={() => setDayModal({ ...dayModal, status: st })}
+                          className={`py-2 rounded-xl text-xs font-display font-bold uppercase border transition-all ${
+                            dayModal.status === st ? 'bg-primary/25 border-primary text-white shadow-glow-primary' : 'bg-surface-container text-on-surface-variant'
+                          }`}
+                        >
+                          {st}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-display font-semibold text-on-surface-variant uppercase mb-1">Reflection Note</label>
+                    <textarea
+                      rows="3"
+                      value={dayModal.note || ''}
+                      onChange={(e) => setDayModal({ ...dayModal, note: e.target.value })}
+                      placeholder="What breakthrough did you achieve today?"
+                      className="w-full px-3 py-2 rounded-xl bg-surface-container border border-white/10 text-xs text-white focus:outline-none focus:border-brand-indigo"
+                    ></textarea>
+                  </div>
+
+                  <button
+                    onClick={() => handleSaveDayNote(dayModal.dayNumber, dayModal.status, dayModal.note, dayModal.mood)}
+                    className="w-full py-2.5 rounded-xl font-display font-bold text-sm text-white bg-brand-indigo hover:bg-brand-indigo-dark shadow-glow-primary"
+                  >
+                    Save Reflection
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* CREATE CHALLENGE MODAL */}
+          {isNewModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+              <div className="w-full max-w-lg rounded-3xl glass-card border border-white/10 p-6 sm:p-8 shadow-modal-rim relative">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-display font-bold text-xl text-white">Create 30-Day Sprint</h3>
+                  <button onClick={() => setIsNewModalOpen(false)} className="text-on-surface-variant hover:text-white">✕</button>
+                </div>
+
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const title = e.target.title.value;
+                    const cat = e.target.category.value;
+                    const desc = e.target.desc.value;
+                    const habits = e.target.habits.value.split(',').map(s => s.trim()).filter(Boolean);
+                    handleCreateChallenge(title, cat, desc, habits);
+                  }}
+                  className="space-y-4"
+                >
+                  <div>
+                    <label className="block text-xs font-display font-semibold text-on-surface-variant uppercase mb-1">Title</label>
+                    <input name="title" required placeholder="e.g. 30 Days of High Performance Coding" className="w-full px-4 py-2 rounded-xl bg-surface-container border border-white/10 text-sm text-white focus:outline-none focus:border-brand-indigo" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-display font-semibold text-on-surface-variant uppercase mb-1">Category</label>
+                    <select name="category" className="w-full px-4 py-2 rounded-xl bg-surface-container border border-white/10 text-sm text-white focus:outline-none focus:border-brand-indigo">
+                      <option>Fitness & Health</option>
+                      <option>Coding & Dev</option>
+                      <option>Mind & Reading</option>
+                      <option>Creative Writing</option>
+                      <option>Deep Work</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-display font-semibold text-on-surface-variant uppercase mb-1">Intention / Description</label>
+                    <textarea name="desc" rows="2" placeholder="Why does this sprint matter to you?" className="w-full px-4 py-2 rounded-xl bg-surface-container border border-white/10 text-xs text-white focus:outline-none focus:border-brand-indigo"></textarea>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-display font-semibold text-on-surface-variant uppercase mb-1">Habits Checklist (Comma separated)</label>
+                    <input name="habits" defaultValue="45-min workout, 1 problem solved, 3L water" className="w-full px-4 py-2 rounded-xl bg-surface-container border border-white/10 text-xs text-white focus:outline-none focus:border-brand-indigo" />
+                  </div>
+                  <div className="flex justify-end gap-3 pt-2">
+                    <button type="button" onClick={() => setIsNewModalOpen(false)} className="px-4 py-2 text-sm text-on-surface-variant">Cancel</button>
+                    <button type="submit" className="px-5 py-2.5 rounded-xl font-display font-bold text-sm text-white bg-gradient-to-r from-brand-indigo to-brand-purple shadow-glow-primary">
+                      Launch Sprint
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* CELEBRATION MODAL */}
+          {celebrationData && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+              <div className="w-full max-w-md rounded-3xl glass-card border border-brand-indigo/30 p-8 shadow-modal-rim text-center relative">
+                <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-tr from-amber-400 to-brand-indigo p-[2px] flex items-center justify-center text-3xl">
+                  🏆
+                </div>
+                <h3 className="font-display font-extrabold text-2xl text-white mb-2">
+                  Day {celebrationData.milestone} Milestone Unlocked!
+                </h3>
+                <p className="text-sm text-on-surface-variant mb-6">
+                  You broke through inertia and built real momentum! Keep the flame burning.
+                </p>
+                <button
+                  onClick={() => setCelebrationData(null)}
+                  className="w-full py-3 rounded-xl font-display font-bold text-sm text-white bg-gradient-to-r from-brand-indigo to-brand-purple shadow-glow-primary"
+                >
+                  Continue Crushing It
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* SHARE CARD MODAL */}
+          {isShareModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+              <div className="w-full max-w-md rounded-3xl glass-card border border-white/10 p-6 shadow-modal-rim relative text-center">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-display font-bold text-lg text-white">Share Your Streak</h3>
+                  <button onClick={() => setIsShareModalOpen(false)} className="text-on-surface-variant hover:text-white">✕</button>
+                </div>
+                <div className="p-6 rounded-2xl bg-surface-lowest border border-white/10 mb-4 text-left space-y-2">
+                  <span className="text-xs text-primary-tint font-bold">⚡ DAYBYDAY — 30 DAYS SPRINT</span>
+                  <h4 className="text-lg font-bold text-white">{activeChallenge.title}</h4>
+                  <div className="pt-2 flex justify-between text-xs text-on-surface-variant border-t border-white/10">
+                    <span>Streak: <strong className="text-amber-300 font-bold">{activeChallenge.streak || 0} Days</strong></span>
+                    <span>Completed: <strong className="text-emerald-400 font-bold">{completedCount}/30 Days</strong></span>
+                    <span>Progress: <strong className="text-white font-bold">{successRate}%</strong></span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(`I'm on Day ${activeChallenge.streak || 0} of my 30-Day sprint on "${activeChallenge.title}" with DayByDay! 🔥`);
+                    alert('Streak status copied to clipboard!');
+                    setIsShareModalOpen(false);
+                  }}
+                  className="w-full py-2.5 rounded-xl bg-brand-indigo text-white font-display font-bold text-sm shadow-glow-primary"
+                >
+                  Copy Streak Summary
+                </button>
+              </div>
+            </div>
+          )}
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

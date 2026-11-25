@@ -1,0 +1,446 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --user-accent: #8083ff;
+    --surface: #0b1326;
+    --surface-lowest: #060e20;
+    --surface-low: #131b2e;
+    --surface-container: #171f33;
+    --surface-high: #222a3d;
+    --surface-highest: #2d3449;
+    --on-surface: #dae2fd;
+    --on-surface-variant: #c7c4d7;
+  }
+
+  body {
+    background-color: #0b1326;
+    color: #dae2fd;
+    min-height: 100vh;
+  }
+
+  html.dark body {
+    background-color: #0b1326 !important;
+    color: #dae2fd !important;
+  }
+
+  html:not(.dark) {
+    --surface: #F8FAFC;
+    --surface-lowest: #F1F5F9;
+    --surface-low: #E2E8F0;
+    --surface-container: #FFFFFF;
+    --surface-high: #F8FAFC;
+    --surface-highest: #F1F5F9;
+    --on-surface: #0F172A;
+    --on-surface-variant: #475569;
+  }
+
+  html:not(.dark) body {
+    background-color: #F8FAFC !important;
+    color: #0F172A !important;
+  }
+}
+
+/* User Accent Color Styling Hooks */
+.bg-user-accent,
+.bg-\[\#8083ff\] {
+  background-color: var(--user-accent, #8083ff) !important;
+}
+
+.text-user-accent,
+.text-\[\#8083ff\] {
+  color: var(--user-accent, #8083ff) !important;
+}
+
+.border-user-accent,
+.border-\[\#8083ff\] {
+  border-color: var(--user-accent, #8083ff) !important;
+}
+
+.hover\:bg-\[\#6c70ff\]:hover,
+.hover\:bg-\[\#9295ff\]:hover {
+  filter: brightness(1.1);
+}
+
+/* Tabular Numerics for jitter-free numbers */
+.tabular-nums,
+[data-tabular="true"] {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+/* Glassmorphic Surfaces */
+.glass-card {
+  background: rgba(23, 31, 51, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html:not(.dark) .glass-card {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
+}
+
+.glass-elevated {
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+html:not(.dark) .glass-elevated {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Active Day Pulse Animation */
+@keyframes activePulse {
+  0%, 100% {
+    box-shadow: 0 0 14px rgba(99, 102, 241, 0.35);
+    border-color: #6366F1;
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(99, 102, 241, 0.7);
+    border-color: #a5b4fc;
+  }
+}
+
+.animate-active-pulse {
+  animation: activePulse 2.2s infinite ease-in-out;
+}
+
+/* Flame Animation */
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.08) rotate(-3deg);
+  }
+  75% {
+    transform: scale(0.96) rotate(3deg);
+  }
+}
+
+.animate-flame {
+  animation: flameFlicker 1.8s infinite ease-in-out;
+}
+
+/* LIGHT MODE COMPREHENSIVE OVERRIDES */
+html:not(.dark) {
+  --surface: #F8FAFC;
+  --surface-dim: #F1F5F9;
+  --surface-bright: #FFFFFF;
+  --surface-lowest: #FFFFFF;
+  --surface-container-lowest: #FFFFFF;
+  --surface-low: #FFFFFF;
+  --surface-container-low: #FFFFFF;
+  --surface-container: #F1F5F9;
+  --surface-container-high: #E2E8F0;
+  --surface-container-highest: #CBD5E1;
+  --on-surface: #0F172A;
+  --on-surface-variant: #475569;
+  --primary: #4F46E5;
+  --primary-tint: #4338CA;
+  --secondary: #6366F1;
+  --secondary-tint: #4338CA;
+  --tertiary: #047857;
+  --tertiary-tint: #065F46;
+}
+
+html:not(.dark) body,
+html:not(.dark) #root,
+html:not(.dark) .bg-\[\#0b1326\],
+html:not(.dark) .bg-\[\#0b1326\]\/90,
+html:not(.dark) .bg-surface,
+html:not(.dark) .bg-surface-dim {
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+html:not(.dark) header {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+}
+
+html:not(.dark) aside,
+html:not(.dark) .bg-\[\#060e20\],
+html:not(.dark) .bg-surface-lowest,
+html:not(.dark) .bg-surface-container-lowest {
+  background-color: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+}
+
+html:not(.dark) aside button:hover {
+  background-color: #F1F5F9 !important;
+  color: #0F172A !important;
+}
+
+html:not(.dark) .bg-\[\#131b2e\],
+html:not(.dark) .bg-surface-low,
+html:not(.dark) .bg-surface-container-low {
+  background-color: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  color: #0F172A !important;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05) !important;
+}
+
+html:not(.dark) .bg-\[\#131b2e\]\/60 {
+  background-color: rgba(241, 245, 249, 0.85) !important;
+  border-color: #E2E8F0 !important;
+}
+
+html:not(.dark) .bg-\[\#171f33\],
+html:not(.dark) .bg-surface-container {
+  background-color: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+  color: #1E293B !important;
+}
+
+html:not(.dark) .bg-\[\#171f33\]\/40,
+html:not(.dark) .bg-\[\#171f33\]\/70,
+html:not(.dark) .bg-surface-container\/60,
+html:not(.dark) .bg-surface-container\/50,
+html:not(.dark) .bg-surface-container\/40 {
+  background-color: #F8FAFC !important;
+  border-color: #E2E8F0 !important;
+  color: #1E293B !important;
+}
+
+html:not(.dark) .bg-\[\#222a3d\],
+html:not(.dark) .bg-\[\#2d3449\],
+html:not(.dark) .bg-surface-container-high,
+html:not(.dark) .bg-surface-container-highest,
+html:not(.dark) .bg-surface-variant {
+  background-color: #E2E8F0 !important;
+  color: #0F172A !important;
+}
+
+html:not(.dark) .bg-\[\#0f172a\],
+html:not(.dark) .bg-\[\#0f172a\]\/90,
+html:not(.dark) .bg-\[\#0f172a\]\/60,
+html:not(.dark) .bg-\[\#0f172a\]\/70 {
+  background-color: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+  color: #0F172A !important;
+}
+
+/* Glassmorphism in Light Mode */
+html:not(.dark) .glass-card {
+  background: #FFFFFF !important;
+  border-color: #E2E8F0 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05) !important;
+}
+
+html:not(.dark) .glass-elevated {
+  background: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1) !important;
+}
+
+/* Borders */
+html:not(.dark) .border-\[\#171f33\],
+html:not(.dark) .border-\[\#171f33\]\/60,
+html:not(.dark) .border-white\/5,
+html:not(.dark) .border-white\/10,
+html:not(.dark) .border-white\/15,
+html:not(.dark) .border-white\/20,
+html:not(.dark) .border-white\/30,
+html:not(.dark) .border-outline,
+html:not(.dark) .border-outline-variant {
+  border-color: #E2E8F0 !important;
+}
+
+/* Base Headings & Text Colors */
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4,
+html:not(.dark) p,
+html:not(.dark) .text-white {
+  color: #0F172A !important;
+}
+
+html:not(.dark) .text-on-surface {
+  color: #0F172A !important;
+}
+
+html:not(.dark) .text-on-surface-variant {
+  color: #475569 !important;
+}
+
+html:not(.dark) .text-\[\#dae2fd\] {
+  color: #1E293B !important;
+}
+
+html:not(.dark) .text-\[\#c7c4d7\],
+html:not(.dark) .text-\[\#c7c4d7\]\/90 {
+  color: #475569 !important;
+}
+
+html:not(.dark) .text-\[\#908fa0\] {
+  color: #64748B !important;
+}
+
+/* High Contrast Colored Accents */
+html:not(.dark) .text-\[\#4edea3\],
+html:not(.dark) .text-tertiary,
+html:not(.dark) .text-tertiary-tint {
+  color: #047857 !important;
+}
+
+html:not(.dark) .text-\[\#d0bcff\],
+html:not(.dark) .text-\[\#c0c1ff\],
+html:not(.dark) .text-primary-tint,
+html:not(.dark) .text-secondary-tint {
+  color: #4338ca !important;
+}
+
+html:not(.dark) .text-\[\#8083ff\],
+html:not(.dark) .text-primary {
+  color: #4f46e5 !important;
+}
+
+html:not(.dark) .text-\[\#f87171\] {
+  color: #dc2626 !important;
+}
+
+html:not(.dark) .text-\[\#ff80bf\] {
+  color: #be185d !important;
+}
+
+/* Saturated Solid Buttons & Badges (keep white text) */
+html:not(.dark) button.bg-\[\#8083ff\],
+html:not(.dark) button.bg-\[\#6366F1\],
+html:not(.dark) button.bg-brand-indigo,
+html:not(.dark) button.bg-emerald-600,
+html:not(.dark) .btn-primary,
+html:not(.dark) .bg-\[\#00885d\] > svg,
+html:not(.dark) .bg-\[\#00885d\] .text-white,
+html:not(.dark) .bg-\[\#6366F1\] > svg,
+html:not(.dark) .bg-\[\#6366F1\] .text-white,
+html:not(.dark) .bg-gradient-to-tr .text-white {
+  color: #FFFFFF !important;
+}
+
+/* Pills & Badges */
+html:not(.dark) .bg-\[\#00885d\]\/30,
+html:not(.dark) .bg-\[\#00885d\]\/25,
+html:not(.dark) .bg-\[\#00885d\]\/20,
+html:not(.dark) .bg-\[\#00885d\]\/10,
+html:not(.dark) .bg-tertiary\/20,
+html:not(.dark) .bg-tertiary\/15 {
+  background-color: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+html:not(.dark) .border-\[\#4edea3\]\/40,
+html:not(.dark) .border-\[\#4edea3\]\/30,
+html:not(.dark) .border-\[\#4edea3\]\/25 {
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+html:not(.dark) .bg-\[\#571bc1\]\/40,
+html:not(.dark) .bg-\[\#571bc1\]\/35,
+html:not(.dark) .bg-\[\#571bc1\]\/30,
+html:not(.dark) .bg-secondary\/20,
+html:not(.dark) .bg-secondary\/15 {
+  background-color: rgba(99, 102, 241, 0.1) !important;
+  border-color: rgba(99, 102, 241, 0.25) !important;
+}
+
+html:not(.dark) .border-\[\#8083ff\]\/40,
+html:not(.dark) .border-\[\#8083ff\]\/30,
+html:not(.dark) .border-\[\#8083ff\]\/25 {
+  border-color: rgba(99, 102, 241, 0.25) !important;
+}
+
+html:not(.dark) .bg-\[\#8083ff\]\/10,
+html:not(.dark) .bg-\[\#8083ff\]\/15,
+html:not(.dark) .bg-\[\#8083ff\]\/20,
+html:not(.dark) .bg-primary\/20,
+html:not(.dark) .bg-primary\/10 {
+  background-color: rgba(99, 102, 241, 0.1) !important;
+  border-color: rgba(99, 102, 241, 0.25) !important;
+}
+
+html:not(.dark) .bg-\[\#f87171\]\/15,
+html:not(.dark) .bg-\[\#93000a\]\/30 {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+html:not(.dark) .border-\[\#f87171\]\/40 {
+  border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Semi-transparent White Overlays */
+html:not(.dark) .bg-white\/5 {
+  background-color: rgba(15, 23, 42, 0.04) !important;
+}
+
+html:not(.dark) .bg-white\/10 {
+  background-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+html:not(.dark) .hover\:bg-white\/5:hover {
+  background-color: rgba(15, 23, 42, 0.06) !important;
+}
+
+html:not(.dark) .hover\:bg-white\/10:hover {
+  background-color: rgba(15, 23, 42, 0.1) !important;
+}
+
+/* Form Controls */
+html:not(.dark) input,
+html:not(.dark) select,
+html:not(.dark) textarea {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+/* Dropdown popups & Modals */
+html:not(.dark) .shadow-2xl {
+  box-shadow: 0 20px 35px -4px rgba(15, 23, 42, 0.12), 0 8px 16px -4px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Scrollbar in Light Mode */
+html:not(.dark) .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.15) !important;
+}
+
+html:not(.dark) .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.3) !important;
+}
+
